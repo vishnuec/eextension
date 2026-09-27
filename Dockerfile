@@ -1,13 +1,9 @@
-server {
-    listen 8080;
-    listen [::]:8080;
+FROM nginx:alpine
 
-    server_name _;
+COPY . /usr/share/nginx/html
 
-    root /usr/share/nginx/html;
-    index index.html;
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]
