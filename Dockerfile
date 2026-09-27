@@ -1,7 +1,13 @@
-FROM nginx:alpine
+server {
+    listen 8080;
+    listen [::]:8080;
 
-COPY . /usr/share/nginx/html
+    server_name _;
 
-EXPOSE 8080
+    root /usr/share/nginx/html;
+    index index.html;
 
-CMD ["nginx", "-g", "daemon off;"]
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
